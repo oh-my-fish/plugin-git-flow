@@ -12,16 +12,22 @@
 #  * remote feature, hotfix and release branch names
 #
 #
+# Installation
+# ------------
+#
+# To achieve git-flow completion nirvana:
+#
+#  1. Install this file in your `~/.config/fish/completions` folder.
+#
 #
 # The Fine Print
 # --------------
 #
-# Copyright (c) 2012 [Justin Hileman](http://justinhileman.com)
+# Copyright (c) 2012-2015 [Justin Hileman](http://justinhileman.com)
 #
 # Distributed under the [MIT License](http://creativecommons.org/licenses/MIT/)
 
-
-for prefix in /usr /usr/local
+for prefix in /usr /usr/local /opt/local
   if test -f $prefix/share/fish/completions/git.fish
     . $prefix/share/fish/completions/git.fish
     break
@@ -55,13 +61,13 @@ end
 
 function __fish_git_flow_branches
   set prefix (__fish_git_flow_prefix $argv[1])
-  __fish_git_branches | grep "^$prefix" | sed "s,^$prefix,," | sort
+  __fish_git_branches | grep --color=never "^$prefix" | sed "s,^$prefix,," | sort
 end
 
 function __fish_git_flow_remote_branches
   set prefix (__fish_git_flow_prefix $argv[1])
   set origin (git config gitflow.origin 2> /dev/null; or echo "origin")
-  git branch -r 2> /dev/null | sed "s/^ *//g" | grep "^$origin/$prefix" | sed "s,^$origin/$prefix,," | sort
+  git branch -r 2> /dev/null | sed "s/^ *//g" | grep --color=never "^$origin/$prefix" | sed "s,^$origin/$prefix,," | sort
 end
 
 function __fish_git_flow_untracked_branches
@@ -183,3 +189,4 @@ complete -f -c git -n '__fish_git_flow_using_command support' -s v    -d 'Verbos
 
 complete -f -c git -n '__fish_git_flow_using_command support' -a start -d 'Start a new support branch'
 complete -f -c git -n '__fish_git_flow_using_command support start' -s F  -d 'Fetch from origin first'
+
