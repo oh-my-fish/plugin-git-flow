@@ -6,7 +6,7 @@ function init -a path --on-event init_git-flow
     end
   end
 
-  if not available __fish_git_branches
+  if not type -q __fish_git_branches
     echo "Error: git completion not found!" >&2; return 1
   end
 end
