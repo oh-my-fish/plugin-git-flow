@@ -1,6 +1,7 @@
-for prefix in /usr /usr/local /opt/local
-  if test -f $prefix/share/fish/completions/git.fish
-    source $prefix/share/fish/completions/git.fish
+for prefix in $fish_complete_path
+  if not string match -e git-flow $prefix >/dev/null
+    and test -f $prefix/git.fish
+    source $prefix/git.fish
     break
   end
 end
